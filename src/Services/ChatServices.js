@@ -44,49 +44,6 @@ export const handleChat = async (userId, optionSelected) => {
     }
 };
 
-// export const submitUserDetails = async (userId, userDetails) => {
-//     try {
-//         console.log("📢 Submitting user details for userId:", userId);
-//         console.log("📍 Data being sent:", userDetails);
-
-//         const response = await axios.post(`${API_BASE_URL}/submit_details`, {
-//             user_id: userId,  // Ensure user_id is sent in the request
-//             ...userDetails
-//         }, {
-//             headers: { "Content-Type": "application/json" }
-//         });
-
-//         console.log("✅ User details submitted:", response.data);
-//         return response.data;
-//     } catch (error) {
-//         console.error("❌ Error submitting user details:", error.response ? error.response.data : error.message);
-//         throw error;
-//     }
-// };
-
-// export const submitUserDetails = async (userId, userName, userContact, userEmail, userLocation = "N/A") => {
-//     console.log("📢 Submitting user details for userId:", userId);
-
-//     const userDetails = `${userName}, ${userContact}, ${userEmail}`; // ✅ Ensuring the correct format
-
-//     const formData = new FormData();
-//     formData.append("user_id", userId);
-//     formData.append("message", userDetails);  // ✅ Sending correct format
-//     formData.append("location", userLocation);
-
-//     try {
-//         const response = await axios.post("http://127.0.0.1:5000/submit_details", formData, {
-//             headers: {
-//                 "Content-Type": "multipart/form-data"
-//             }
-//         });
-//         console.log("✅ User details submitted:", response);
-//         return response;
-//     } catch (error) {
-//         console.error("❌ Error submitting user details:", error.response ? error.response.data : error.message);
-//         throw error;
-//     }
-// };
 
 
 export const submitUserDetails = async (userId, userDetails) => {
@@ -103,7 +60,7 @@ export const submitUserDetails = async (userId, userDetails) => {
     formData.append("serviceType", userDetails.serviceType);
 
     try {
-        const response = await axios.post("http://127.0.0.1:5000/submit_details", formData, {
+        const response = await axios.post(`${API_BASE_URL}/submit_details`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -116,60 +73,6 @@ export const submitUserDetails = async (userId, userDetails) => {
     }
 };
 
-
-
-// ✅ Function to submit user details using FormData
-// export const submitUserDetails = async (userId, userResponse, userQuery = "", location = "", serviceType) => {
-//     console.log("📢 Submitting user details for userId:", `${userId}`);
-
-//     // ✅ Ensure `serviceType` is defined
-//     if (!serviceType) {
-//         console.warn("⚠️ Warning: serviceType is not provided, defaulting to 'N/A'");
-//         serviceType = "N/A";
-//     }
-
-//     // Create FormData object to send form-data
-//     const formData = new FormData();
-//     formData.append('user_id', userId);
-//     formData.append('message', userResponse);
-//     formData.append('user_query', userQuery);
-
-//     if (serviceType === "Pre-Sale") {
-//         formData.append('location', location);
-//     } else {
-//         formData.append('location', "N/A"); //Prevent empty value
-//     }
-
-//     try {
-//         const response = await axios.post(`${API_BASE_URL}/submit_details`, formData, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data'  // Important for form-data
-//             }
-//         });
-//         console.log("✅ User details submitted:", response);
-//         return response;
-//     } catch (error) {
-//         console.error("❌ Error submitting user details:", error.response ? error.response.data : error.message);
-//         throw error;
-//     }
-// };
-
-
-
-
-
-// ✅ Submit user rating
-// export const submitUserRating = async (userId, rating) => {
-//     try {
-//         console.log("📢 Submitting rating:", rating); // ✅ Debugging
-//         const response = await axios.post(`${API_BASE_URL}/submit_ratings`, { user_id: userId, rating: rating }, axiosConfig);
-//         console.log("✅ User rating submitted:", response);
-//         return response.data;
-//     } catch (error) {
-//         console.error("❌ Error submitting user rating:", error.response ? error.response.data : error.message);
-//         throw error;
-//     }
-// };
 
 export const submitUserRating = async (userId, rating) => {
     try {
@@ -199,6 +102,7 @@ export const terminateChat = async (userId) => {
     }
 };
 
+
 // ✅ Terminate response handling
 
 export const terminateResponse = async (userId, userResponse) => {
@@ -206,9 +110,9 @@ export const terminateResponse = async (userId, userResponse) => {
         console.log("📢 Sending terminate response:", { user_id: userId, response: userResponse });
 
         const response = await axios.post(`${API_BASE_URL}/terminate_response`, {
-            user_id: userId.trim(),
-            response: userResponse.trim()
-        },);
+            user_id: userId,
+            response: userResponse
+        }, axiosConfig);
 
         console.log("✅ Terminate response handled successfully:", response);
         return response;
@@ -217,8 +121,6 @@ export const terminateResponse = async (userId, userResponse) => {
         throw error;
     }
 };
-
-
 
 
 
@@ -246,7 +148,7 @@ export const submitFeedback = async (userId, feedback) => {
         console.log("📢 Submitting feedback:", feedback);
         const response = await axios.post(
             `${API_BASE_URL}/submit_feedback`,
-            { user_id: userId, feedback: feedback }, axiosConfig
+            { user_id: userId, feedback_details: feedback }, axiosConfig
 
         );
         console.log("✅ Feedback submitted:", response);

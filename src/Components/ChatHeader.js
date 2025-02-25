@@ -1,10 +1,13 @@
 import React from 'react';
 
-const ChatHeader = ({ terminateChatbot }) => {
+
+const ChatHeader = ({ handleTerminateChat }) => {
     return (
         <div className="chat-header">
-            <span className="chat-title">Real Estate Chatbot</span>
-            <button className="close-btn" onClick={terminateChatbot}>Close</button>
+            <span className="chat-title">Ask ATai</span>
+            <button className="close-btn" onClick={handleTerminateChat}>
+                <i className="fas fa-times"></i>
+            </button>
         </div>
     );
 };
